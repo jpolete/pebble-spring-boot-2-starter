@@ -10,7 +10,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-//import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext;
+import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
@@ -38,12 +38,12 @@ class ServletComponentRegisteringPostProcessor implements BeanFactoryPostProcess
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-//        if (isRunningInEmbeddedContainer()) {
+        if (isRunningInEmbeddedContainer()) {
             ClassPathScanningCandidateComponentProvider componentProvider = createComponentProvider();
             for (String packageToScan : this.packagesToScan) {
                 scanPackage(componentProvider, packageToScan);
             }
-//        }
+        }
     }
 
     private void scanPackage(ClassPathScanningCandidateComponentProvider componentProvider, String packageToScan) {
@@ -57,10 +57,10 @@ class ServletComponentRegisteringPostProcessor implements BeanFactoryPostProcess
         }
     }
 
-//    private boolean isRunningInEmbeddedContainer() {
-//        return this.applicationContext instanceof EmbeddedWebApplicationContext
-//                && ((EmbeddedWebApplicationContext) this.applicationContext).getServletContext() == null;
-//    }
+    private boolean isRunningInEmbeddedContainer() {
+        return this.applicationContext instanceof ServletWebServerApplicationContext
+                && ((ServletWebServerApplicationContext) this.applicationContext).getServletContext() == null;
+    }
 
     private ClassPathScanningCandidateComponentProvider createComponentProvider() {
         ClassPathScanningCandidateComponentProvider componentProvider = new ClassPathScanningCandidateComponentProvider(
