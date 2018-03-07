@@ -23,7 +23,7 @@ Add the local Maven repo directory to your pom.xml
   </repositories>
 ```
 
-Download and unzip the starter from [releases](https://github.com/jpolete/pebble-spring-boot-2-starter/releases).
+Download and unzip the build jars from [releases](https://github.com/jpolete/pebble-spring-boot-2-starter/releases).
 
 Deploy the starter to your local Maven repository directory. (Be sure to change the paths below)
 
