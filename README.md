@@ -1,18 +1,48 @@
 # Pebble Spring Boot Starter
 Spring Boot starter for autoconfiguring Pebble as an MVC ViewResolver for Spring Boot 2.x.
 
-## Basic Usage
+## Basic (Local) Usage
+
+This is a stop-gap project meant to be used until Pebble officially supports Spring Boot 2.x. Until then, you can deploy this to a local repo and use in your projects.
+
+Add a "repo" directory to your project
+
+```bash
+mkdir repo
+```
+
+Add the local Maven repo directory to your pom.xml
+
+```XML
+  <repositories>
+    <repository>
+      <id>project.local</id>
+      <name>project</name>
+      <url>file:${project.basedir}/repo</url>
+    </repository>
+  </repositories>
+```
+
+Download and unzip the starter from [releases](https://github.com/jpolete/pebble-spring-boot-2-starter/releases).
+
+Deploy the starter to your local Maven repository directory. (Be sure to change the paths below)
+
+```bash
+mvn deploy:deploy-file -Durl=file:///path/to/your/local/maven/repo \
+-Dfile=/path/to/unzipped/download/pebble-spring-boot-2-starter-1.0.0-SNAPSHOT.jar \
+-DgroupId=com.mitchellbosecke \
+-DartifactId=pebble-spring-boot-2-starter \
+-Dpackaging=jar \
+-Dversion=1.0.0-SNAPSHOT
+```
+
 Add the starter dependency to your pom.xml:
 ```XML
 <dependency>
 	<groupId>com.mitchellbosecke</groupId>
 	<artifactId>pebble-spring-boot-2-starter</artifactId>
-	<version>${version}</version>
+	<version>1.0.0-SNAPSHOT</version>
 </dependency>
-```
-Or build.gradle:
-```Gradle
-compile "com.mitchellbosecke:pebble-spring-boot-2-starter:$version"
 ```
 
 This is enough for autoconfiguration to kick in. This includes:
@@ -21,7 +51,7 @@ This is enough for autoconfiguration to kick in. This includes:
 * a PebbleEngine with default settings, configured with the previous loader
 * a ViewResolver that will output ``text/html`` in ``UTF-8``
 
-PLEASE NOTE: the starter depends on ``spring-boot-starter-web`` but is marked as optional, you'll need to add the dependency yourself or configure Spring MVC appropiately.
+PLEASE NOTE: the starter depends on ``spring-boot-starter-web`` but is marked as optional, you'll need to add the dependency yourself or configure Spring MVC appropriately.
 
 ## Compatibility matrix
 Pebble vs tested Boot versions (may work on older Boot releases).
